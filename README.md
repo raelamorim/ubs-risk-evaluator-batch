@@ -52,7 +52,7 @@ UBS.Risk.Evaluator.Batch
 
 1. **Clone the Repository**  
    ```bash
-   git clone https://seu-repositorio.git
+   git clone https://github.com/raelamorim/ubs-risk-evaluator-batch.git
    cd UBS.Risk.Evaluator.Batch
     ```
 
@@ -80,11 +80,15 @@ Make sure you are in the root of the repository, where the .sln file is.
 
 ## How to Build the Docker Image 🐳
 
-1. **Create the Image**
+1. **Open project directory**
+    ```bash
+    cd UBS.Risk.Evaluator.Batch    
+    ```
+
+2. **Create the Image**
     ```bash
     docker build -t ubs-risk-evaluator .
     ```
-    Execute this command inside project directory
 
 2. **Run the Container**
     ```bash

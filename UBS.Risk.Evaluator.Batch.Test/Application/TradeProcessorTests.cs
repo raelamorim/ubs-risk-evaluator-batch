@@ -1,6 +1,6 @@
 ﻿using Moq;
 using Microsoft.Extensions.Logging;
-using UBS.Risk.Evaluator.Batch.Insfrastructure.Interfaces;
+using UBS.Risk.Evaluator.Batch.Infrastructure.Interfaces;
 using UBS.Risk.Evaluator.Batch.Domain.Exceptions;
 
 namespace UBS.Risk.Evaluator.Batch.Test.Application;

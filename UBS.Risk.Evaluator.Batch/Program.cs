@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using UBS.Risk.Evaluator.Batch.Application.Interfaces;
-using UBS.Risk.Evaluator.Batch.Insfrastructure;
-using UBS.Risk.Evaluator.Batch.Insfrastructure.Interfaces;
+using UBS.Risk.Evaluator.Batch.Infrastructure;
+using UBS.Risk.Evaluator.Batch.Infrastructure.Interfaces;
 
 // Configure dependency injection
 var serviceProvider = new ServiceCollection()

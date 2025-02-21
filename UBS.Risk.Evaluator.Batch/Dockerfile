@@ -25,15 +25,11 @@ COPY --from=publish /app/publish .
 # Enabling the use of volume
 VOLUME ["/app/data"]
 
-# Copying and changing permissions of the startup script before changing the user
-COPY start.sh .
-RUN chmod +x start.sh
-
 # Adding user for security
 USER $APP_UID
 
 # Adding graceful shutdown
 STOPSIGNAL SIGINT
 
-# Using the startup script
-CMD ["./start.sh"]
+# Using CMD to run the application directly
+CMD ["sh", "-c", "echo 'Starting UBS Risk Evaluator'; dotnet UBS.Risk.Evaluator.Batch.dll"]

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UBS.Risk.Evaluator.Batch.Insfrastructure.Interfaces;
+using UBS.Risk.Evaluator.Batch.Infrastructure.Interfaces;
 
-namespace UBS.Risk.Evaluator.Batch.Insfrastructure
+namespace UBS.Risk.Evaluator.Batch.Infrastructure
 {
 	public class FileManager : IFileManager
 	{
