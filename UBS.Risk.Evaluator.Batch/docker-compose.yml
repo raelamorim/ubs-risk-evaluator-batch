@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  ubs-risk-evaluator:
+    image: ubs-risk-evaluator:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /home/Meu_Computador/Desktop/Estudo/NetCore/UBS/UBS.Risk.Evaluator.Batch/Local/:/app/data
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "8080:80"

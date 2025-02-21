@@ -1,0 +1,22 @@
+{
+  "profiles": {
+    "UBS.Risk.Evaluator.Batch": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    },
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "serviceName": "ubs-risk-evaluator",
+      "dockerComposeFilePath": "docker-compose.yml",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
