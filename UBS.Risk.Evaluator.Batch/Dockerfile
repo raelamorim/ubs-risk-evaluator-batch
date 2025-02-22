@@ -12,6 +12,11 @@ COPY . .
 WORKDIR "/src"
 RUN dotnet build "./UBS.Risk.Evaluator.Batch.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+# Configure time_zone
+ENV TZ=America/Sao_Paulo
+RUN apt-get update && apt-get install -y tzdata
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Publish stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
