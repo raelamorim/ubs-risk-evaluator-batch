@@ -15,7 +15,7 @@ namespace UBS.Risk.Evaluator.Batch.Domain.Models
 		/// <summary>
 		/// Indicates the client´s sector which can be "Public" or "Private" 
 		/// </summary>
-		public string ClientSector { get; } = "";
+		public string ClientSector { get; }
 
 		/// <summary>
 		/// Indicates when the next payment from the client to the bank is expected
@@ -36,10 +36,16 @@ namespace UBS.Risk.Evaluator.Batch.Domain.Models
 			}
 
 			// Validate ClientSector
-			clientSector = clientSector ?? "";
-			if (clientSector != "Private" && clientSector != "Public")
+			if (string.IsNullOrWhiteSpace(clientSector))
 			{
-				Notifications.Add("ClientSector must be 'Private' or 'Public'.");
+				Notifications.Add("ClientSector is required.");
+			}
+			else
+			{
+				if (clientSector != "Private" && clientSector != "Public")
+				{
+					Notifications.Add("ClientSector must be 'Private' or 'Public'.");
+				}
 			}
 
 			// If there are no errors, assign values

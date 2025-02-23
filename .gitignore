@@ -9,6 +9,9 @@ nupkg/
 */Local/output/
 */Local/logs/
 
+# Stryker result
+*/StrykerOutput/
+
 # Visual Studio Code
 .vscode/*
 !.vscode/settings.json

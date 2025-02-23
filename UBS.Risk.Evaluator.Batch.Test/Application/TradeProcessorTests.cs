@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using UBS.Risk.Evaluator.Batch.Infrastructure.Interfaces;
 using UBS.Risk.Evaluator.Batch.Domain.Exceptions;
+using System;
 
 namespace UBS.Risk.Evaluator.Batch.Test.Application;
 
@@ -34,9 +35,10 @@ public class TradeProcessorTests
 		var tradeLines = new[]
 		{
 			"12/31/2024",
-			"2",
+			"3",
 			"1000.0 Public 01/01/2025",
-			"2000.0 Private 02/01/2025"
+			"2000.0 Private 02/01/2025",
+			"2000.0 A 02/01/2025",
 		};
 
 		_mockReader.SetupSequence(r => r.ReadLine())
@@ -44,6 +46,7 @@ public class TradeProcessorTests
 			.Returns(() => tradeLines[1])
 			.Returns(() => tradeLines[2])
 			.Returns(() => tradeLines[3])
+			.Returns(() => tradeLines[4])
 			.Returns(() => null);
 
 		_mockWriter.Setup(w => w.WriteLine(It.IsAny<string>()));
@@ -53,6 +56,24 @@ public class TradeProcessorTests
 
 		// Assert
 		_mockWriter.Verify(writer => writer.WriteLine(It.IsAny<string>()), Times.Exactly(2));
+		_mockLogger.Verify(
+			x => x.Log(
+				LogLevel.Information,
+				It.IsAny<EventId>(),
+				It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("Processing completed. Output written to output.txt")),
+				It.IsAny<Exception>(),
+				It.IsAny<Func<It.IsAnyType, Exception, string>>()
+			),
+		Times.Once);
+		_mockLogger.Verify(
+			x => x.Log(
+				LogLevel.Information,
+				It.IsAny<EventId>(),
+				It.Is<It.IsAnyType>((o, t) => o.ToString().Contains("Summary: Trades Read: 3, Trades Written: 2, Warnings: 1")),
+				It.IsAny<Exception>(),
+				It.IsAny<Func<It.IsAnyType, Exception, string>>()
+			),
+		Times.Once);
 	}
 
 	[Fact(DisplayName = "Should finish process when input path file is invalid")]
@@ -65,6 +86,7 @@ public class TradeProcessorTests
 		});
 
 		// Assert
+		Assert.Contains("Input file path is not properly configured in appsettings.json.", exception.Message);
 		_mockWriter.Verify(writer => writer.WriteLine(It.IsAny<string>()), Times.Never);
 	}
 
@@ -78,6 +100,7 @@ public class TradeProcessorTests
 		});
 
 		// Assert
+		Assert.Contains("Output file path is not properly configured in appsettings.json.", exception.Message);
 		_mockWriter.Verify(writer => writer.WriteLine(It.IsAny<string>()), Times.Never);
 	}
 
@@ -107,6 +130,7 @@ public class TradeProcessorTests
 		});
 
 		// Assert
+		Assert.Contains("Invalid reference date format.", exception.Message);
 		_mockWriter.Verify(writer => writer.WriteLine(It.IsAny<string>()), Times.Never);
 	}
 
@@ -136,6 +160,7 @@ public class TradeProcessorTests
 		});
 
 		// Assert
+		Assert.Contains("Invalid trade count.", exception.Message);
 		_mockWriter.Verify(writer => writer.WriteLine(It.IsAny<string>()), Times.Never);
 	}
 
